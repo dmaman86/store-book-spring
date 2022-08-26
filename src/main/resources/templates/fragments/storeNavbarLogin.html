@@ -1,0 +1,17 @@
+<nav th:fragment="navbarStoreLogin" class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/}">Book Store</a>
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse justify-content-end" id="navbar">
+            <ul class="navbar-nav">
+                <li>
+                    <div sec:authorize="hasAuthority('USER')">
+                        <div th:replace="index::logout"></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/head.html :: head"> </head>
+<body>
+
+<div th:fragment="logout" class="logout" sec:authorize="isAuthenticated()">
+    Logged user: <span sec:authentication="name"></span> |
+    Roles: <span sec:authentication="principal.authorities"></span> |
+    <!--/* When using CSRF this needs to be a POST */-->
+    <form th:action="@{/destroy}" method="post" style="display:inline">
+        <input type="submit" class="btn btn-outline-danger" value="Logout"/>
+    </form>
+</div>
+<h1>Thymeleafexamples - Spring Security</h1>
+<p>This is a demo of Thymeleaf and Spring-Security integration.</p>
+<p>Example administrator: jim / demo</p>
+<p>Example user: bob / demo</p>
+<p>Example user and administrator: ted / demo</p>
+<h2>Private pages</h2>
+<p>This is a public page, but you can navigate to protected pages to trigger authentication.</p>
+<ul>
+    <li>Go to <a href="admin" th:href="@{/admin}">administration zone</a> (only admins)</li>
+    <li>Go to <a href="store" th:href="@{/templates/store}">user zone</a> (only users)</li>
+    <li>Go to <a href="store" th:href="@{/shared}">shared zone</a> (both users and admins)</li>
+</ul>
+<h2>Exception handling</h2>
+<ul>
+    <li>You can <a href="error" th:href="@{/simulateError}">simulate an exception</a> to see custom ErrorPage.</li>
+</ul>
+
+<div th:fragment="footer">
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</div>
+</body>
+</html>

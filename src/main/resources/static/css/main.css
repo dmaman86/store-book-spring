@@ -1,0 +1,25 @@
+div.logout {
+    float: right !important;
+}
+
+.bookform-section {
+    border-top: 1px dotted #888;
+    padding-top: 1.5em;
+}
+
+.table-fixed thead > tr, .table-fixed tbody > tr {
+    display: flex;
+    justify-content: space-around;
+    flex: 0 0 auto;
+}
+.table-fixed thead > tr th, .table-fixed tbody > tr th, .table-fixed thead > tr td, .table-fixed tbody > tr td {
+    flex: 1;
+}
+.table-fixed tbody {
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+}
+.table-lock-height > tbody {
+    height: 60vh;
+}

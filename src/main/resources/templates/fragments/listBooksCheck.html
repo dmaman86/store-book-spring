@@ -1,0 +1,71 @@
+<div th:fragment="TableField (carts, total)">
+    <div class="table-responsive">
+        <table class="table table-bordered tbl-cart">
+            <thead>
+            <tr>
+                <td class="hidden-xs">Image</td>
+                <td>Product Name</td>
+                <td class="td-qty">Quantity</td>
+                <td>Unit Price</td>
+                <td>Discount</td>
+                <td>Sub Total After Discount</td>
+                <td>Remove</td>
+                <td>Observation</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cart : ${carts}">
+                <td class="hidden-xs">
+                    <img th:src="${cart.book.image}" alt="image book" width="47" height="47">
+                </td>
+                <td th:text="${cart.book.book_name}"></td>
+                <td>
+                    <div class="input-group bootstrap-touchspin">
+                                            <span class="input-group-btn">
+                                                <form th:action="@{/decrementProduct/{id}(id=${cart.book.id})}" th:object="${cart.book}" method="post">
+                                                    <input type="hidden" name="id" th:value="${cart.book.id}">
+                                                    <button class="btn btn-default bootstrap-touchspin-down" type="submit">
+                                                            -
+                                                    </button>
+                                                </form>
+                                            </span>
+                        <span class="input-group-addon bootstrap-touchspin-prefix" style="display: none;">
+
+                                            </span>
+                        <input type="text" name="" th:value="${cart.quantity}" class="input-qty form-control text-center" style="display: block;">
+                        <span class="input-group-addon bootstrap-touchspin-postfix" style="display: none;">
+
+                                            </span>
+                        <span class="input-group-btn">
+                                                <form th:action="@{/incrementProduct/{id}(id=${cart.book.id})}" th:object="${cart.book}" method="post">
+                                                    <input type="hidden" name="id" th:value="${cart.book.id}">
+                                                    <button class="btn btn-default bootstrap-touchspin-up" type="submit">
+                                                        +
+                                                    </button>
+                                                </form>
+
+                                            </span>
+                    </div>
+                </td>
+                <td th:text="${'$ ' + cart.book.price}"></td>
+                <td th:text="${cart.book.discount} + ' %'"></td>
+                <td th:text="${'$ ' + cart.getTotal()}"></td>
+                <td class="text-center">
+                    <form th:action="@{/deleteBookCart/{id}(id=${cart.book.id})}" th:object="${cart.book}" method="post" class="form-inline">
+                        <input type="hidden" name="id" th:value="${cart.book.id}">
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </form>
+                </td>
+                <td th:text="${cart.observation}"></td>
+            </tr>
+            <tr>
+                <td colspan="6" align="right">Total</td>
+                <td class="total" colspan="2"><b th:text="${'$ ' + total}"></b>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

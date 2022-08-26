@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:insert="fragments/head.html :: head"></head>
+<body>
+<div th:replace="fragments/navBarStore.html :: navbarStore"></div>
+<div class="container">
+    <div th:if="${books.isEmpty()}">
+        <h2>No books yet!</h2>
+    </div>
+    <div th:unless="${books.isEmpty()}">
+        <div class="row row-cols-1 row-cols-md-3 g-4 p-3" th:fragment="list" xmlns:th="http://www.thymeleaf.org">
+            <div th:each="book, stat : ${books}" class="col">
+                <div class="card" style="width: 18rem;">
+                    <img  th:src="${book.image}" class="card-img-top" alt="image book" style="width: 100%; height: 230px;">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${book.book_name}"></h5>
+                        <del class="text-" th:text="'Price: $' + ${book.price}"></del>
+                        <p th:text="'$' + ${#numbers.formatDecimal(book.price - book.price * (book.discount / 100), 0, 2)}"></p>
+                        <div th:if="${book.quantity > 0}" class="text-center">
+                            <form th:action="@{/addToCart}" th:object="${book}" method="post">
+                                <input type="hidden" name="book" th:value="${book.id}">
+                                <button class="btn btn-success" type="submit">
+                                        <span class="material-symbols-outlined">
+                                            add_shopping_cart
+                                        </span>
+                                </button>
+                            </form>
+                        </div>
+                        <p th:unless="${book.quantity > 0}">Sorry but the book is out.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="index::footer"></div>
+</body>
+</html>

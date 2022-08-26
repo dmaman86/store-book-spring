@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/head.html :: head"> </head>
+<body>
+
+<div th:replace="fragments/adminNavBar.html  :: navbarAdmin"></div>
+
+
+<div class="container p-3">
+
+    <div class="row text-center">
+        <div th:switch="${books.size()}" class="col">
+            <h2 th:case="0">No books yet!</h2>
+            <div th:case="*">
+                <div class="row g-0 align-items-center">
+                    <div class="col-md-6 col-lg-6 h2">Products List</div>
+                    <div class="col-6 col-md-6 d-grid gap-2 d-md-block">
+                        <div class="row d-flex">
+                            <div class="col-md-8">
+                                <form th:action="@{/admin/searchBook}" method="post" class="d-flex form-inline">
+                                    <input class="form-control me-2" type="search" placeholder="Search Book" aria-label="Search" name="search" th:value="${search}">
+                                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                                </form>
+                            </div>
+                            <div class="col-md-4">
+                                <a th:href="@{/admin/addBook}" class="btn btn-outline-success">
+                                    Add New Book
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-sm-12 hero-feature p-3">
+                    <div class="table-responsive">
+                        <table class="table table-bordered tbl-cart table-striped table-fixed table-lock-height">
+                            <thead>
+                            <tr>
+                                <td class="hidden-xs">Image</td>
+                                <td>Product Name</td>
+                                <td>Price</td>
+                                <td class="td-qty">Quantity</td>
+                                <td>Discount</td>
+                                <td></td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="book : ${books}">
+                                <td class="hidden-xs">
+                                    <img th:src="${book.image}" alt="image book" width="47" height="47">
+                                </td>
+                                <td th:text="${book.book_name}"></td>
+                                <td th:text="${book.price}"></td>
+                                <td th:text="${book.quantity}"></td>
+                                <td th:text="${book.discount} + ' %'"></td>
+                                <td class="d-grid gap-2 d-md-flex justify-content-md-center">
+                                    <form th:action="@{admin/editBook}" th:object="${book}" method="post">
+                                        <input name="id" th:value="${book.id}" type="hidden">
+                                        <button type="submit" class="btn btn-warning">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </form>
+                                    <form th:action="@{admin/deleteBook/{id}(id=${book.id})}" th:object="${book}" method="post">
+                                        <input type="hidden" name="id" th:value="${book.id}">
+                                        <button type="submit" class="btn btn-danger">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    </form>
+
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="index::footer"></div>
+</body>
+</html>

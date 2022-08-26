@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/head.html :: head"> </head>
+<body>
+
+<div th:replace="fragments/adminNavBar.html  :: navbarAdmin"></div>
+
+
+<div class="container p-3">
+
+    <div class="row text-center">
+        <div th:switch="${orders.size()}" class="col">
+            <h2 th:case="0">No orders yet!</h2>
+            <div th:case="*">
+                <div class="row g-0 align-items-center">
+                    <div class="col-md-6 col-lg-6 h2">List Orders</div>
+                    <div class="col-6 col-md-6 d-grid gap-2 d-md-block">
+                        <div class="row d-flex">
+                            <div class="col-md-8">
+                                <form th:action="@{/admin/searchOrder}" method="post" class="d-flex form-inline">
+                                    <input class="form-control me-2" type="search" placeholder="Search Order" aria-label="Search" name="search" th:value="${search}">
+                                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-sm-12 hero-feature">
+                    <div class="table-responsive p-3">
+                        <table class="table table-bordered tbl-cart table-striped table-fixed table-lock-height">
+                            <thead>
+                            <tr>
+                                <td>Number Order</td>
+                                <td>User Name</td>
+                                <td>Date</td>
+                                <td>Amount</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="order : ${orders}">
+                                <td th:text="${order.id}"></td>
+                                <td th:text="${order.user_name}"></td>
+                                <td th:text="${#calendars.format(order.created_date, 'dd/MM/yyyy HH:mm')}"></td>
+                                <td th:text="${'$ ' + order.amount}"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" align="right">Total</td>
+                                <td class="total"><b th:text="${'$ ' + total_orders}"></b>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="index::footer"></div>
+</body>
+</html>

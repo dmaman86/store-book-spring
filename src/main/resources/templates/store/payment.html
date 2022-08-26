@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:insert="fragments/head.html :: head"></head>
+<body>
+<div th:replace="fragments/storeNavbarLogin.html :: navbarStoreLogin"></div>
+
+<div class="container-fluid">
+    <div class="container">
+        <!-- Cart -->
+        <div class="row text-center">
+            <div th:switch="${carts.size()}" class="col">
+                <h2 th:case="0">No books yet!</h2>
+                <div th:case="*">
+                    <h2 class="my-5">SHOPPING CART</h2>
+                    <div class="alert alert-danger" role="alert" th:text="${error}" th:if="${error}"></div>
+                    <div class="col-lg-12 col-sm-12 hero-feature">
+                        <div th:replace="fragments/listBooksCheck.html::TableField(carts=${carts}, total=${total})"></div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                            <a th:href="@{/}" class="btn btn-primary">
+                                <i class="fas fa-arrow-circle-left"></i>
+                                Continue Shopping
+                            </a>
+                            <form th:action="@{/emptyBasket}" method="post">
+                                <button type="submit" class="btn btn-primary">
+                                    Empty Basket
+                                </button>
+                            </form>
+                            <form th:action="@{/paybooks}" method="post">
+                                <button type="submit" class="btn btn-primary">
+                                    Pay <i class="fas fa-arrow-circle-right"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Cart -->
+    </div>
+</div>
+
+<div th:replace="index::footer"></div>
+</body>
+</html>

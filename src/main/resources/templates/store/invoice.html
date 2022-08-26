@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:insert="fragments/head.html :: head"></head>
+<body>
+<div th:replace="fragments/storeNavbarLogin.html :: navbarStoreLogin"></div>
+
+
+
+<div class="container-fluid">
+    <div class="container">
+        <h2 class="text-center">Thank you for buying from us.</h2>
+        <p class="text-center">Purchase invoice.</p>
+        <div class="table-responsive">
+            <table>
+                <tr>
+                    <td>
+                        <table>
+                            <tr>
+                                <td>
+                                    Invoice #: <span th:text="${order.id}"></span><br />
+                                    Created: <span th:text="${#calendars.format(order.created_date, 'dd/MM/yyyy HH:mm')}"></span><br />
+                                    Name: <span th:text="${order.user_name}"></span>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <table class="table table-bordered tbl-cart">
+                            <thead>
+                            <tr>
+                                <td>Item</td>
+                                <td>Quantity</td>
+                                <td>Price</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="cart : ${carts}" class="item">
+                                <td th:text="${cart.book.book_name}"></td>
+                                <td th:text="${cart.quantity}"></td>
+                                <td th:text="${cart.getTotal()}"></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td th:text="${total}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                <a th:href="@{/}" class="btn btn-primary">
+                    <i class="fas fa-arrow-circle-left"></i>
+                    Back Shopping
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="index::footer"></div>
+</body>
+</html>
