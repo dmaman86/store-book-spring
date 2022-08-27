@@ -1,0 +1,9 @@
+com.store.storebookspring
+com.store.storebookspring.beans
+com.store.storebookspring.controller
+com.store.storebookspring.listeners
+com.store.storebookspring.model
+com.store.storebookspring.repository
+com.store.storebookspring.services
+com.store.storebookspring.util
+com.store.storebookspring.web
